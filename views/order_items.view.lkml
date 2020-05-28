@@ -39,8 +39,50 @@ view: order_items {
     sql: ${TABLE}.sale_price ;;
   }
 
+  parameter: aggregation_type {
+    type: string
+    allowed_value: {
+      label: "Count"
+      value: "count"
+    }
+    allowed_value: {
+      label: "Total Sale Price"
+      value: "total_sale_price"
+    }
+    allowed_value: {
+      label: "Average Sale Price"
+      value: "average_sale_price"
+    }
+  }
+
+  measure: aggregation {
+    label_from_parameter: aggregation_type
+    type: number
+    #value_format: "$0.0,\"K\""
+    sql:
+    CASE
+      WHEN {% parameter aggregation_type %} = 'count'
+        THEN ${count}
+      WHEN {% parameter aggregation_type %} = 'total_sale_price'
+        THEN ${total_sale_price}
+      WHEN {% parameter aggregation_type %} = 'average_sale_price'
+        THEN ${average_sale_price}
+      ELSE NULL
+    END ;;
+  }
+
   measure: count {
     type: count
     drill_fields: [id, inventory_items.id, orders.id]
+  }
+
+  measure: total_sale_price {
+    type: sum
+    sql: ${sale_price} ;;
+  }
+
+  measure: average_sale_price {
+    type: average
+    sql: ${sale_price}  ;;
   }
 }
