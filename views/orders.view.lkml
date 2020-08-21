@@ -3,7 +3,7 @@ view: orders {
   drill_fields: [id]
 
   dimension: id {
-    primary_key: yes
+    primary_key: no
     type: number
     sql: ${TABLE}.id ;;
   }
