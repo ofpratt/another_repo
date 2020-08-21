@@ -1,6 +1,9 @@
 view: inventory_items {
   sql_table_name: demo_db.inventory_items ;;
   drill_fields: [id]
+  set: test {
+    fields: [id,cost]
+  }
 
   dimension: id {
     primary_key: yes

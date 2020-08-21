@@ -1,6 +1,9 @@
 view: products {
   sql_table_name: demo_db.products ;;
   drill_fields: [id]
+  set: test {
+    fields: [id,brand]
+  }
 
   dimension: id {
     primary_key: yes
@@ -46,5 +49,14 @@ view: products {
   measure: count {
     type: count
     drill_fields: [id, item_name, inventory_items.count]
+#     link: {
+#       label: "Drill Look"
+#       url:"/looks/1910?&f[products.brand]={{ products.brand }}&f[users.city]={{ _filters['users.city'] | url_encode }}"
+#     }
+  }
+
+  measure: price_count_dist {
+    type: count_distinct
+    sql: ${retail_price} ;;
   }
 }

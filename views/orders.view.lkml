@@ -22,10 +22,20 @@ view: orders {
     sql: ${TABLE}.created_at ;;
   }
 
-  dimension: status {
+  dimension: status_dim {
+    hidden: no
     type: string
+    description: "This shows what stage an order is in"
     sql: ${TABLE}.status ;;
   }
+
+#   filter: status {
+#     type: string
+#     description: "this is a status"
+#     #suggest_dimension: status_dim
+#     sql: {% condition status %} ${status_dim} {% endcondition %};;
+#   }
+
 
   dimension: user_id {
     type: number
