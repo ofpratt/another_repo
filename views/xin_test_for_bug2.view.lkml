@@ -22,4 +22,5 @@ view: xin_test_for_bug2 {
     type: count
     drill_fields: [id]
   }
+   #i just be testin again
 }
