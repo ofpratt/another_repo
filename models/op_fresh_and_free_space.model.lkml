@@ -13,6 +13,10 @@ persist_with: op_fresh_and_free_space_default_datagroup
 
 explore: connection_reg_r3 {}
 
+#explore: test_liquid {}
+
+#explore: test_sql_table_name {}
+
 explore: events {
   join: users {
     type: left_outer
