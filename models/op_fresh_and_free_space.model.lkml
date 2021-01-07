@@ -27,17 +27,17 @@ explore: events {
 
 #########Testing
 explore: flights {
-  aggregate_table: rollup__dep_date {
-    query: {
-      dimensions: [dep_date]
-      measures: [count]
-      timezone: "UTC"
-    }
+  # aggregate_table: rollup__dep_date {
+  #   query: {
+  #     dimensions: [dep_date]
+  #     measures: [count]
+  #     timezone: "UTC"
+  #   }
 
-    materialization: {
-      datagroup_trigger: op_fresh_and_free_space_default_datagroup
-    }
-  }
+  #   materialization: {
+  #     datagroup_trigger: op_fresh_and_free_space_default_datagroup
+  #   }
+  # }
 }
 #####################################################
 #####################################################
@@ -187,6 +187,11 @@ explore: orders {
     type: left_outer
     sql_on: ${orders.user_id} = ${users.id} ;;
     relationship: many_to_one
+  }
+  join: sme_lookml_dt{
+    type: left_outer
+    sql_on: ${sme_lookml_dt.id} = ${orders.id}  ;;
+    relationship: many_to_many
   }}
 
 
