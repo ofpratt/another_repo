@@ -85,6 +85,33 @@ dimension: goes_with_filter_bug_test {
     sql: ${TABLE}.status ;;
   }
 
+  dimension: yes_no_status {
+    type: yesno
+    sql: ${status_dim} = "pending" ;;
+  }
+
+  measure: sum_of_cancelled{
+    type: sum
+    sql: ${id};;
+    filters: [status_dim: "cancelled"]
+  }
+
+  measure: count_of_cancelled {
+    type: count_distinct
+    sql: ${user_id} ;;
+    filters: [status_dim: "cancelled"]
+  }
+
+  measure: addition_of_cancelled{
+    type: number
+    sql: ${sum_of_cancelled} + ${count_of_cancelled} ;;
+    link: {
+      label: "Test Drill"
+      url: "/explore/op_fresh_and_free_space/orders?fields=orders.id&f[orders.yes_no_status]=yes&sorts=orders.id&"
+
+    }
+  }
+
 #   filter: status {
 #     type: string
 #     description: "this is a status"
@@ -111,6 +138,11 @@ filter: test_user_id {
         url: "/explore/op_fresh_and_free_space/orders?fields=orders.id,orders.user_id,orders.status_dim&f[orders.status_dim]=&f[orders.user_id]={{ value }}&f[orders.created_date]={{ _filters['orders.created_date'] }}"
       }
 
+  }
+
+  measure: count_distinct {
+    type: count_distinct
+    sql: ${user_id} ;;
   }
 
   dimension: name_to_num_id {
