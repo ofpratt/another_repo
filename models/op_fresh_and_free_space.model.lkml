@@ -26,6 +26,8 @@ explore: events {
   }
 }
 
+###git rid of this committ
+
 #########Testing
 explore: flights {
   # aggregate_table: rollup__dep_date {
