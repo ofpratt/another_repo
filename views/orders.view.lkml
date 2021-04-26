@@ -38,6 +38,24 @@ dimension: goes_with_filter_bug_test {
     sql: 'all' ;;
     }
 
+    parameter: string_filter_boi {
+      type: string
+      suggest_explore: order_items
+      suggest_dimension: products.brand
+    }
+
+
+parameter: number_of_days_test {
+  type: number
+}
+
+filter: date_selector_test {
+  type: date
+  sql: ${created_date} >= date_add({% date_start date_selector_test %}, interval -{% parameter number_of_days_test %} day)
+  AND
+  ${created_date} <= date_add({% date_start date_selector_test %}, interval {% parameter number_of_days_test %} day) ;;
+}
+
   dimension_group: created {
     type: time
     timeframes: [
@@ -49,9 +67,38 @@ dimension: goes_with_filter_bug_test {
       quarter,
       year
     ]
-    sql: ${TABLE}.created_at ;;
+    sql: ${TABLE}.created_at  ;;
   }
 
+  filter: dumb_date_filter {
+    type: date
+    sql: {% condition %} ${created_date} {% endcondition %} ;;
+  }
+
+  dimension: seven_days {
+    type: date
+    sql: date_add({% date_start dumb_date_filter %}, interval -7 day) ;;
+  }
+  parameter: date_label {
+    type: number
+    default_value: "{{ orders.seven_days }}"
+  }
+
+dimension: dumb_date_dimension {
+  #label: "Compared to 7th Day Prior {{ orders.seven_days._value }}"
+  label: "{% parameter date_label %}"
+  sql: 1 ;;
+}
+
+dimension: created_date_no_nulls{
+  type: date
+  sql: case when ${created_date} = "2019-12-22" then 0 else ${created_date} end;;
+}
+
+dimension: test_coalesce {
+  type: number
+  sql: coalesce(0,${created_date_no_nulls}) ;;
+}
   parameter: date_bucket {
     type: string
     default_value: "Month"
@@ -137,24 +184,52 @@ filter: test_user_id {
         label: "SME LookML Explore Link"
         url: "/explore/op_fresh_and_free_space/orders?fields=orders.id,orders.user_id,orders.status_dim&f[orders.status_dim]=&f[orders.user_id]={{ value }}&f[orders.created_date]={{ _filters['orders.created_date'] }}"
       }
+      link: {
+        label: "Test Drill"
+        url: "/explore/op_fresh_and_free_space/orders?fields=orders.id,orders.user_id={{ value }}
+        &{% if orders.created_date._value == null %}f[orders.created_date]= null{% else %}f[orders.created_date]={{ orders.created_date._value }}{% endif %}"
+      }
+
+    link: {
+      label: "Test Drill without null"
+      url: "/explore/op_fresh_and_free_space/orders?fields=orders.id,orders.user_id={{ value }}&f[orders.created_date]={{ orders.created_date._value }}"
+    }
+
+
 
   }
 
   measure: count_distinct {
     type: count_distinct
     sql: ${user_id} ;;
+    html: <a href="{{ link }}&sorts=orders.created_date+desc">{{value}}</a> ;;
   }
 
   dimension: name_to_num_id {
-    type: string
+    type: number
     sql: case when
-    ${user_id} < 100 then "apples"
-    when ${user_id} < 200 then "pears"
-    when ${user_id} < 300 then "banana"
+    ${user_id} < 100 then 20
+    when ${user_id} < 200 then 30
+    when ${user_id} < 300 then 40
     else null
     end
     ;;
   }
+
+  measure:  null_sum{
+    type: sum
+    sql: ${name_to_num_id}) ;;
+  }
+
+measure: has_value {
+  type: number
+  sql: max(${name_to_num_id} not null) ;;
+}
+
+measure: null_workaround{
+  type: number
+  sql: ${null_sum}/ nullif(${has_value}, 0) ;;
+}
 
   parameter: name_to_num_filter {
     type: unquoted
@@ -175,9 +250,13 @@ filter: test_user_id {
   measure: count {
     type: count
     drill_fields: [id, users.id, users.first_name, users.last_name, order_items.count]
+    # link: {
+    #   label: "This is another drill"
+    #   url: "/explore/op_fresh_and_free_space/order_items?qid=AEvUVirUn64drymbj11cXg"
+    # }
     link: {
-      label: "This is another drill"
-      url: "/explore/op_fresh_and_free_space/order_items?qid=AEvUVirUn64drymbj11cXg"
+      label: "Test Drill"
+      url: "/explore/op_fresh_and_free_space/orders?fields=orders.id,orders.user_id={{ value }}&f[orders.created_date]={{ orders.created_date._value }}"
     }
 
   }

@@ -25,6 +25,7 @@ view: users {
   }
 
   dimension_group: created {
+    group_label: "Created date!"
     type: time
     timeframes: [
       raw,
@@ -35,6 +36,13 @@ view: users {
       quarter,
       year
     ]
+    sql: ${TABLE}.created_at ;;
+  }
+
+  dimension: fiscal_quarter {
+    description: "This starts in Feb"
+    group_label: "Created date!"
+    type: date_fiscal_quarter
     sql: ${TABLE}.created_at ;;
   }
 

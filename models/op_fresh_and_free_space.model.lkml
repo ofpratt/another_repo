@@ -2,6 +2,7 @@ connection: "thelook"
 
 # include all the views
 include: "/views/**/*.view"
+include: "/test_dash.dashboard"
 
 datagroup: op_fresh_and_free_space_default_datagroup {
   sql_trigger: SELECT CURDATE();;
