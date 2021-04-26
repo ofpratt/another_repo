@@ -9,6 +9,7 @@ datagroup: op_fresh_and_free_space_default_datagroup {
   max_cache_age: "1 hour"
 }
 
+###git rid of this committ
 
 persist_with: op_fresh_and_free_space_default_datagroup
 
@@ -25,8 +26,6 @@ explore: events {
     relationship: many_to_one
   }
 }
-
-###git rid of this committ
 
 #########Testing
 explore: flights {
