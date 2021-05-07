@@ -46,6 +46,15 @@ view: products {
     sql: ${TABLE}.sku ;;
   }
 
+  measure: conversion_rate_site{
+    type: number
+    sql: ${count}/NULLIF(${retail_price},0.49) ;;
+    value_format_name: percent_1
+    label: "Conversion Rate"
+    html: {{rendered_value}} || Total Selected Used: {{count}} ;;
+    #drill_fields: [town,zip_code,registrations,count_used]
+}
+
   measure: count {
     type: count
     drill_fields: [id, item_name, inventory_items.count]

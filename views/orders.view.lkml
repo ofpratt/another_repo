@@ -21,7 +21,28 @@ parameter: filter_bug_test {
     type: string
     allowed_value: {value: "(All)"}
     allowed_value: {value: "Access Group"}
+
 }
+
+
+
+  dimension: media_url {
+    label: "Post Image"
+    description: "No preview available for Media Type 'VIDEO'"
+    sql: 1=1 ;;
+    html: <img src="https://www.thesprucepets.com/thmb/3-ISVJpCrp9TUfeRdH1mfzJlHGg=/960x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/golden-retriever-puppy-in-grass-923135452-5c887d4146e0fb00013365ba.jpg" height="50px"/> ;;
+  }
+
+  dimension: media_url_large {
+    hidden: no
+    label: "Post Image Large"
+    description: "No preview available for Media Type 'VIDEO'"
+    sql: 1=1 ;;
+    html: <img src="https://www.thesprucepets.com/thmb/3-ISVJpCrp9TUfeRdH1mfzJlHGg=/960x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/golden-retriever-puppy-in-grass-923135452-5c887d4146e0fb00013365ba.jpg" height="125px" width="125px"/> ;;
+  }
+
+
+
 
 dimension: goes_with_filter_bug_test {
   type:  string
@@ -234,7 +255,7 @@ measure: null_workaround{
   parameter: name_to_num_filter {
     type: unquoted
     allowed_value: {
-      label: "apples"
+      label: "{{ _localization['apples'] }}"
       value: "1"
     }
     allowed_value: {
