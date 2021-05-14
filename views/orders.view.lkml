@@ -30,7 +30,7 @@ parameter: filter_bug_test {
     label: "Post Image"
     description: "No preview available for Media Type 'VIDEO'"
     sql: 1=1 ;;
-    html: <img src="https://www.thesprucepets.com/thmb/3-ISVJpCrp9TUfeRdH1mfzJlHGg=/960x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/golden-retriever-puppy-in-grass-923135452-5c887d4146e0fb00013365ba.jpg" height="50px"/> ;;
+    html: <img src="https://www.thesprucepets.com/thmb/3-ISVJpCrp9TUfeRdH1mfzJlHGg=/960x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/golden-retriever-puppy-in-grass-923135452-5c887d4146e0fb00013365ba.jpg" height="20px"/> ;;
   }
 
   dimension: media_url_large {
@@ -86,7 +86,8 @@ filter: date_selector_test {
       week,
       month,
       quarter,
-      year
+      year,
+      day_of_week
     ]
     sql: ${TABLE}.created_at  ;;
   }
