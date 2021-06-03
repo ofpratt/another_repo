@@ -6,6 +6,7 @@ view: products {
   }
 
   dimension: id {
+    description: "This is another ID"
     primary_key: yes
     type: number
     sql: ${TABLE}.id ;;
