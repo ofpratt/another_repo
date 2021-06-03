@@ -3,10 +3,13 @@ view: orders {
   drill_fields: [id]
 
   dimension: id {
+    description: "this is the ID field"
     primary_key: yes
     type: number
     sql: ${TABLE}.id ;;
   }
+
+  #######Test Comment
 
   parameter: date_selector{
     type:  date
