@@ -16,7 +16,7 @@ explore: connection_reg_r3 {}
 
 #explore: test_liquid {}
 
-#explore: test_sql_table_name {}
+
 
 explore: events {
   join: users {
