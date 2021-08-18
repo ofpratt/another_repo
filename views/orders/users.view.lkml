@@ -16,6 +16,7 @@ view: users {
   dimension: city {
     type: string
     sql: ${TABLE}.city ;;
+    html: <a href="/explore/{{ _user_attributes['city_name'] }}EC2%20Instance%20Id={{value}}">{{ value }}</a> ;;
   }
 
   dimension: country {
@@ -33,10 +34,32 @@ view: users {
       date,
       week,
       month,
+      week_of_year,
       quarter,
       year
     ]
     sql: ${TABLE}.created_at ;;
+  }
+
+  parameter: timeframe_picker {
+    label: "Date Granularity"
+    type: string
+    allowed_value: { value: "Date" }
+    allowed_value: { value: "Week" }
+    allowed_value: { value: "Month" }
+    allowed_value: { value: "Quarter"}
+    default_value: "Date"
+  }
+
+  dimension: dynamic_timeframe {
+    type: string
+    sql:
+    CASE
+    WHEN {% parameter timeframe_picker %} = 'Date' THEN ${users.created_date}
+    WHEN {% parameter timeframe_picker %} = 'Week' THEN ${users.created_week_of_year}
+    WHEN{% parameter timeframe_picker %} = 'Month' THEN ${users.created_month}
+    WHEN{% parameter timeframe_picker %} = 'Quarter' THEN ${users.created_quarter}
+    END ;;
   }
 
   dimension: fiscal_quarter {

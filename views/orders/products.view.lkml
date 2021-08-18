@@ -12,6 +12,15 @@ view: products {
     sql: ${TABLE}.id ;;
   }
 
+  # filter: brand_and_category {
+  #   type: string
+  #   sql: {% condition brand_and_category} products.brand {% endcondition %}
+  #   OR
+  #   {% condition brand_and_category} products.category {% endcondition %};;
+  # }
+
+
+
   dimension: brand {
     type: string
     sql: ${TABLE}.brand ;;

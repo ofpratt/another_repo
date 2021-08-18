@@ -1,7 +1,10 @@
+include: "/views/**/orders.view"
 view: sme_lookml_dt {
   derived_table: {
     sql: SELECT
           (DATE(`created_at`)) AS `orders.created_date`,
+
+
           `id` AS `orders.id`,
           case when
           orders.user_id > 1000 then "apples"
@@ -9,7 +12,7 @@ view: sme_lookml_dt {
           when orders.user_id > 0 then "banana"
           else null
           end
-           AS `orders.name_to_num_id`,
+          AS `orders.name_to_num_id`,
           `user_id` AS `orders.user_id`,
           `status` AS `orders.status_dim`
       FROM
@@ -25,7 +28,7 @@ view: sme_lookml_dt {
           else null
           end
           {% endcondition %}
-       ;;
+      ;;
   }
 
   measure: count {
@@ -67,9 +70,9 @@ view: sme_lookml_dt {
     {% if date_format._parameter_value == 'us' %}
     {{ rendered_value | date: "%b %d, %y" }}
     {% elsif date_format._parameter_value == 'eu' %}
-   {{ rendered_value | date: "%d %b, %y" }}
+  {{ rendered_value | date: "%d %b, %y" }}
     {% else %}
-   null
+  null
     {% endif %};;
   }
 

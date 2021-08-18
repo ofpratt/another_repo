@@ -6,7 +6,7 @@ view: flights {
     sql: ${TABLE}.arr_delay ;;
   }
 
-  dimension_group: arr {
+  dimension_group: arrival {
     type: time
     timeframes: [
       raw,
@@ -35,7 +35,7 @@ view: flights {
     sql: ${TABLE}.dep_delay ;;
   }
 
-  dimension_group: dep {
+  dimension_group: departure {
     type: time
     timeframes: [
       raw,
@@ -75,6 +75,8 @@ view: flights {
   }
 
   dimension: id2 {
+    primary_key: yes
+    hidden: yes
     type: number
     sql: ${TABLE}.id2 ;;
   }
