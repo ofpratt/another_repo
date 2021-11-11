@@ -79,6 +79,7 @@ view: users {
   measure: count {
     type: count
     drill_fields: [detail*]
+    value_format_name: percent_1
   }
 
   # ----- Sets of fields for drilling ------
