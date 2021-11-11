@@ -6,6 +6,9 @@ view: flights {
     sql: ${TABLE}.arr_delay ;;
   }
 
+#####This is a comment!!
+
+
   dimension_group: arr {
     type: time
     timeframes: [
