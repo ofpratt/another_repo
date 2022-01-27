@@ -24,6 +24,7 @@ view: products {
   dimension: brand {
     type: string
     sql: ${TABLE}.brand ;;
+    html: <a href="/explore/op_fresh_and_free_space/products&f[products.department]=men">{{ value }}</a>  ;;
   }
 
   dimension: category {

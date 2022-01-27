@@ -85,4 +85,34 @@ view: order_items {
     type: average
     sql: ${sale_price}  ;;
   }
+
+  measure: total_profit {
+    hidden: yes
+    type: number
+    sql: ${total_sale_price}-${inventory_items.total_cost} ;;
+    value_format_name: usd
+  }
+
+#LINK LIQUID VARIABLE EXAMPLES
+  measure: count_test_1 {
+    group_label: "Link Liquid Variable Examples"
+    label: "Count with Filtered Drill Modal"
+    description: "When we drill into this measure, the results in the drill modal will only show records where Total Profit >= 50000. This link uses the link parameter."
+    type: count
+    drill_fields: [products.category, order_items.total_profit]
+    link: {
+      label: "Filtered Drill Modal"
+      url: "{{ link }}&f[order_items.total_profit]=>=50000"
+    }
+  }
+
+  measure: count_test_2 {
+    group_label: "Link Liquid Variable Examples"
+    label: "Count with Filtered Linked Explore"
+    description: "When we drill into this measure, we will be sent to an explore that will show records where Total Profit >= 50000. This link uses the HTML parameter."
+    type: count
+    drill_fields: [products.category, order_items.total_profit]
+    html: <a href="{{ link }}&f[order_items.total_profit]=>=50000&f[orders.status_dim]=complete">{{ rendered_value }}</a> ;;}
+
+
 }
