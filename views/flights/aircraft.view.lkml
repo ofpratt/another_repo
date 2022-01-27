@@ -6,7 +6,7 @@ view: aircraft {
     type: string
     sql: ${TABLE}.address1 ;;
   }
-
+# bad code
   dimension: address2 {
     type: string
     sql: ${TABLE}.address2 ;;
