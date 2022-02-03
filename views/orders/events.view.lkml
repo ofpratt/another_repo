@@ -8,6 +8,10 @@ view: events {
     sql: ${TABLE}.id ;;
   }
 
+  parameter: test_filter {
+
+  }
+
   dimension_group: created {
     type: time
     timeframes: [

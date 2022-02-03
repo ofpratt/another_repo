@@ -102,6 +102,14 @@ view: users {
   measure: count {
     type: count
     drill_fields: [detail*]
+    html: <a href="{{ link }}&f[users.city]=New+York">{{ value }}</a> ;;
+  }
+
+  measure: number_time {
+    type: number
+    sql: ${zip} - ${count} ;;
+    drill_fields: [detail*]
+    html: <a href="{{ link }}&f[users.city]=New+York">{{ value }}</a> ;;
   }
 
   # ----- Sets of fields for drilling ------

@@ -19,6 +19,9 @@ explore: connection_reg_r3 {}
 
 
 explore: events {
+  always_filter: {
+    filters: [events.test_filter: "this^_is_a_filter"]
+  }
   join: users {
     type: left_outer
     sql_on: ${events.user_id} = ${users.id} ;;
