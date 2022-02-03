@@ -19,9 +19,11 @@ explore: connection_reg_r3 {}
 
 
 explore: events {
+
   always_filter: {
     filters: [events.test_filter: "this^_is_a_filter"]
   }
+
   join: users {
     type: left_outer
     sql_on: ${events.user_id} = ${users.id} ;;
@@ -108,6 +110,12 @@ explore: inventory_items {
 ####### AGG AWARENESS TEST EXPLORE
 explore: order_items {
   label: "Big ol order items 😎"
+  join: common_filters {}
+  join: ndt_datatonic_test {
+    type: left_outer
+    #relationship: one_to_one
+    sql_on: ${ndt_datatonic_test.id} = ${orders.id} ;;
+  }
   join: inventory_items {
     type: left_outer
     sql_on: ${order_items.inventory_item_id} = ${inventory_items.id} ;;
